@@ -198,6 +198,8 @@ tests:
               - "ceph config set client.rgw.{daemon_id:shared.pri} rgw_zonegroup shared"
               - "ceph config set client.rgw.{daemon_id:shared.pri} rgw_zone primary"
               - "ceph orch restart {service_name:shared.pri}"
+              - "sleep 120"
+              - "radosgw-admin sync status"
         ceph-sec:
           config:
             cephadm: true
@@ -211,6 +213,8 @@ tests:
               - "ceph config set client.rgw.{daemon_id:shared.sec} rgw_zonegroup shared"
               - "ceph config set client.rgw.{daemon_id:shared.sec} rgw_zone secondary"
               - "ceph orch restart {service_name:shared.sec}"
+              - "sleep 120"
+              - "radosgw-admin sync status"
         ceph-arc:
           config:
             cephadm: true
@@ -228,6 +232,8 @@ tests:
               - "radosgw-admin period update --commit"
               - "radosgw-admin period get"
               - "ceph orch restart {service_name:shared.arc}"
+              - "sleep 120"
+              - "radosgw-admin sync status"
       desc: Setting up RGW multisite replication environment with archive zone
       module: exec.py
       name: setup multisite
